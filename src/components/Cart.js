@@ -50,7 +50,8 @@ class Cart extends Component {
 
             var cartFinal = [...this.state.cart];
 
-            if (this.props.antipasti) {
+         {/*  decommentare dopo
+              if (this.props.antipasti) {
                 var antipasti = [];
                 var trovato = false;
                 for (let j = 0; j < cartFinal.length; j++) {
@@ -64,7 +65,7 @@ class Cart extends Component {
                 }
                 cartFinal = cartFinal.concat(antipasti);
             }
-
+            
             if (this.props.primi) {
                 var primi = [];
                 var trovato1 = false;
@@ -79,6 +80,7 @@ class Cart extends Component {
                 }
                 cartFinal = cartFinal.concat(primi);
             }
+       
 
             if (this.props.secondi) {
                 var secondi = [];
@@ -124,6 +126,7 @@ class Cart extends Component {
                 }
                 cartFinal = cartFinal.concat(dolci);
             }
+             */ }
 
             this.setState({ cart: cartFinal }, () => {
                 localStorage.setItem('cart', JSON.stringify(this.state.cart))
@@ -172,11 +175,13 @@ class Cart extends Component {
     render() {
 
         var total = 0;
-        for (let i = 0; i < this.state.cart.length; i++) {
-            if (this.state.cart[i].quantity > 0) {
-                total = total + (this.state.cart[i].foodPrice * this.state.cart[i].quantity);
-            } else {
-                total += this.state.cart[i].foodPrice;
+        if ( !this.state.cart[0] === undefined && this.state.cart.length > 0) {
+            for (let i = 0; i < this.state.cart.length; i++) {
+                if (this.state.cart[i].quantity > 0) {
+                    total = total + (this.state.cart[i].foodPrice * this.state.cart[i].quantity);
+                } else {
+                    total += this.state.cart[i].foodPrice;
+                }
             }
         }
         total = Math.round(total * 100) / 100;
@@ -188,7 +193,7 @@ class Cart extends Component {
                     <hr />
 
                     <div style={{ position: 'absolute', top: 25, right: 15 }}>
-                        <Badge color="secondary"
+                        <Badge color="secondary" overlap="rectangular"
                             badgeContent={this.state.cart.length} >
                             <ShoppingCartIcon onClick={this.handleModal} />
                         </Badge>
@@ -208,7 +213,7 @@ class Cart extends Component {
                             <div className="container padding-bottom-3x mb-1">
 
                                 <div className="table-responsive shopping-cart">
-                                    {this.state.cart.length > 0 ?
+                                    { !this.state.cart.length > 0 && this.state.cart[0] === undefined ?
                                         <table className="table">
                                             <thead>
                                                 <tr>
