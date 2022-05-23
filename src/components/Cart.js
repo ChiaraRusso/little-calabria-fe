@@ -50,8 +50,8 @@ class Cart extends Component {
 
             var cartFinal = [...this.state.cart];
 
-         {/*  decommentare dopo
-              if (this.props.antipasti) {
+
+            if (this.props.antipasti && this.props.antipasti.length > 0) {
                 var antipasti = [];
                 var trovato = false;
                 for (let j = 0; j < cartFinal.length; j++) {
@@ -65,8 +65,8 @@ class Cart extends Component {
                 }
                 cartFinal = cartFinal.concat(antipasti);
             }
-            
-            if (this.props.primi) {
+
+            if (this.props.primi && this.props.primi.length > 0) {
                 var primi = [];
                 var trovato1 = false;
                 for (let j = 0; j < cartFinal.length; j++) {
@@ -80,9 +80,9 @@ class Cart extends Component {
                 }
                 cartFinal = cartFinal.concat(primi);
             }
-       
 
-            if (this.props.secondi) {
+
+            if (this.props.secondi && this.props.secondi.length > 0) {
                 var secondi = [];
                 var trovato2 = false;
                 for (let j = 0; j < cartFinal.length; j++) {
@@ -97,7 +97,7 @@ class Cart extends Component {
                 cartFinal = cartFinal.concat(secondi);
             }
 
-            if (this.props.pizze) {
+            if (this.props.pizze && this.props.pizze.length > 0) {
                 var pizze = [];
                 var trovato3 = false;
                 for (let j = 0; j < cartFinal.length; j++) {
@@ -112,7 +112,7 @@ class Cart extends Component {
                 cartFinal = cartFinal.concat(pizze);
             }
 
-            if (this.props.dolci) {
+            if (this.props.dolci && this.props.dolci.length > 0) {
                 var dolci = [];
                 var trovato4 = false;
                 for (let j = 0; j < cartFinal.length; j++) {
@@ -126,7 +126,7 @@ class Cart extends Component {
                 }
                 cartFinal = cartFinal.concat(dolci);
             }
-             */ }
+
 
             this.setState({ cart: cartFinal }, () => {
                 localStorage.setItem('cart', JSON.stringify(this.state.cart))
@@ -175,7 +175,7 @@ class Cart extends Component {
     render() {
 
         var total = 0;
-        if ( !this.state.cart[0] === undefined && this.state.cart.length > 0) {
+        if (this.state.cart[0] !== undefined && this.state.cart.length > 0) {
             for (let i = 0; i < this.state.cart.length; i++) {
                 if (this.state.cart[i].quantity > 0) {
                     total = total + (this.state.cart[i].foodPrice * this.state.cart[i].quantity);
@@ -213,7 +213,7 @@ class Cart extends Component {
                             <div className="container padding-bottom-3x mb-1">
 
                                 <div className="table-responsive shopping-cart">
-                                    { !this.state.cart.length > 0 && this.state.cart[0] === undefined ?
+                                    { this.state.cart.length > 0 && this.state.cart[0] !== undefined ?
                                         <table className="table">
                                             <thead>
                                                 <tr>
@@ -229,7 +229,7 @@ class Cart extends Component {
                                                         <td>
                                                             <div className="product-item">
                                                                 <div className="product-thumb" >
-                                                                    <img src={value.foodImage} alt="Product" style={{
+                                                                    <img src={`${process.env.PUBLIC_URL}/images/${value.foodImage}`} alt="Product" style={{
                                                                         margin: 'auto',
                                                                         display: 'block',
                                                                         maxWidth: '100%',
