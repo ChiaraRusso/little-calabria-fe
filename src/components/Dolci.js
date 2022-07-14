@@ -2,19 +2,12 @@ import React, { Component } from 'react';
 import Navbar from './Navbar';
 import Card from './Card';
 
-import fichi from '../images/dolci/fichi.png';
-import nacatole from '../images/dolci/nacatole.png';
-import zeppole from '../images/dolci/zeppole.png';
-import tiramisu from '../images/dolci/tiramisu.png';
-import tartufo from '../images/dolci/tartufo.png';
-import cannoli from '../images/dolci/cannoli.png';
-import bocconotti from '../images/dolci/bocconotti.png';
-import cantucci from '../images/dolci/cantucci.png';
+import APIService from '../service/APIService';
 
 class Dolci extends Component {
 
     state = {
-        dolci: [
+       /* dolci: [
             { id: 32, foodDescription: "", foodName: "Fichi secchi", foodPrice: 3.00, foodImage: fichi, quantity: 0 },
             { id: 33, foodDescription: "", foodName: "Nacatole", foodPrice: 5.50, foodImage: nacatole, quantity: 0 },
             { id: 34, foodDescription: "", foodName: "Zeppole di S. Giuseppe", foodPrice: 5.50, foodImage: zeppole, quantity: 0 },
@@ -23,7 +16,21 @@ class Dolci extends Component {
             { id: 37, foodDescription: "", foodName: "Cannoli siciliani", foodPrice: 4.90, foodImage: cannoli, quantity: 0 },
             { id: 38, foodDescription: "", foodName: "Bocconotti ripieni", foodPrice: 3.90, foodImage: bocconotti, quantity: 0 },
             { id: 39, foodDescription: "", foodName: "Cantucci", foodPrice: 2.90, foodImage: cantucci, quantity: 0 },
-        ]
+        ]*/
+
+        dolci: []
+    }
+
+    componentDidMount() {
+
+        APIService.getDesserts().then((data) => {
+            this.setState({ dolci: data.data })
+
+        })
+            .catch(function (ex) {
+                console.log('ERROR ', ex);
+
+            });;
     }
 
     handleAdd = card => {
